@@ -1,9 +1,12 @@
-const { createStore } = require("redux");
+const { createStore, combineReducers, applyMiddleware } = require("redux");
+const reduxLogger = require('redux-logger');
+
+// Create logger to use as middleware function
+const logger = reduxLogger.createLogger();
 
 // Action Type or Constant which represent intent
 const BUY_CAKE = "BUY_CAKE";
-const BAKE_CAKE = "BAKE_CAKE";
-
+const BUY_ICECREAM = "BUY_ICECREAM";
 
 // Action Creators which return Action Object
 const buyCake = () => {
@@ -12,36 +15,58 @@ const buyCake = () => {
     }
 }
 
-const addCake = () => {
+const buyIceCream = () => {
     return {
-        type: BAKE_CAKE
+        type: BUY_ICECREAM
     }
 }
 
-// Reducer function
-const initialState = {
+// REDUCERS
+// Initial Cake state of store
+const initialCakeState = {
     numberOfCakes: 10
 }
 
-const reducer = (state = initialState, action) => {
+// Cake Reducer function
+const cakeReducer = (state = initialCakeState, action) => {
     switch(action.type) {
         case BUY_CAKE: return {
             numberOfCakes: state.numberOfCakes - 1
-        }
-        case BAKE_CAKE: return {
-            numberOfCakes: state.numberOfCakes + 1
         }
         default: return state
     }
 };
 
-// Store - represent state of shelf
-const store = createStore(reducer);
+// Initial IceCream state of store
+const initialIceCreamState = {
+    numberOfIceCreams: 20
+}
 
-store.subscribe(()=> {console.log(store.getState())});
-// Sell some cakes from shelf
+// Ice Crea Reducer function
+const iceCreamReducer = (state = initialIceCreamState, action) => {
+    switch(action.type) {
+        case BUY_ICECREAM: return {
+            numberOfIceCreams: state.numberOfIceCreams - 1
+        }
+        default: return state
+    }
+}
+
+// Combined reducers: which will be passed into store
+const rootReducer = combineReducers({
+    cake: cakeReducer,
+    iceCream: iceCreamReducer
+});
+
+// Store - represent state of application
+const store = createStore(rootReducer, applyMiddleware(logger));
+
+// Subscribe to Store for listening operations 
+store.subscribe(()=> {});
+
+// Intent performed on Store
+// Sell some cakes
 store.dispatch(buyCake());
 store.dispatch(buyCake());
-store.dispatch(buyCake());
-// Add more cakes to shelf
-store.dispatch(addCake());
+// Sell some iceCream
+store.dispatch(buyIceCream());
