@@ -1,0 +1,23 @@
+{
+  "name": "redux-demo",
+  "version": "1.0.0",
+  "description": "Practice app for Redux",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codebysachin/redux-demo.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/codebysachin/redux-demo/issues"
+  },
+  "homepage": "https://github.com/codebysachin/redux-demo#readme",
+  "dependencies": {
+    "redux": "^4.0.4"
+  }
+}
